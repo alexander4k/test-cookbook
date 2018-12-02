@@ -6,19 +6,25 @@ from bson.objectid import ObjectId
 from bson.json_util import dumps
 from nltk.tag import pos_tag
 from pprint import pprint
+from dotenv import load_dotenv
 
+load_dotenv()
 
+print(os.getenv('URI', 'Optional default value'))
 app = Flask(__name__)
 
-app.config["MONGO_DBNAME"] = "test-cookbook"
-app.config["MONGO_URI"] = "mongodb://admin:kawaii1010@ds155823.mlab.com:55823/test-cookbook"
+app.config["MONGO_DBNAME"] = os.getenv('DB_NAME', 'Optional default value')
+app.config["MONGO_URI"] = os.getenv('URI', 'Optional default value')
+
+
 
 mongo = PyMongo(app)
 
 
 @app.route("/")
 def find_recipe():
-    return render_template("recipes.html")
+    recipe = mongo.db.recipes.find_one()
+    return render_template("recipes.html", recipe=recipe)
 
 
 @app.route("/get_recipes")
