@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="dropdown1" class="dropdown-content">
+      <li><a href="#!">one</a></li>
+      <li><a href="#!">two</a></li>
+      <li class="divider"></li>
+      <li><a href="#!">three</a></li>
+    </ul>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#!" class="brand-logo">Logo</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="sass.html">Sass</a></li>
+          <li><a href="badges.html">Components</a></li>
+          <!-- Dropdown Trigger -->
+          <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
+        </ul>
+      </div>
+    </nav>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".dropdown-trigger").dropdown();
+            $(".add_ingredient").click(function () {
+              $(".more-ingredients").append('<div class="input-field col s10"><i class="material-icons prefix">poll</i><textarea name="ingredients" class="materialize-textarea"></textarea></div>');
+            });
+            $('#next').click(function() {
+               $.ajax("{{ url_for('get_recipes') }}").done(function (reply) {
+                  $('.more-ingredients').html(reply);
+               });
+            });
+            $(".add_instruction").click(function () {
+              $(".more-instructions").append('<div class="input-field col s10"><i class="material-icons prefix">poll</i><textarea name="instructions" class="materialize-textarea"></textarea></div>');
+            });
+            $('#next').click(function() {
+               $.ajax("{{ url_for('get_recipes') }}").done(function (reply) {
+                  $('.more-instructions').html(reply);
+               });
+            });
+        
+            $('.collapsible').collapsible();
+
+            $('.datepicker').datepicker();
+
+            $('select').formSelect();
+            
+            $('.sidenav').sidenav();
+        });
+    </script>
+</body>
+</html>
